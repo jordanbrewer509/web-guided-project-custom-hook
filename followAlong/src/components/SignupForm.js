@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 
 import Button from "../theme/Button";
+import { useForm } from "../hooks/useForm";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -21,23 +22,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const initialValue = {username: '', email: ''};
+
 export default function SignupForm() {
   const classes = useStyles();
-  const [firstName, setFirstName] = useState("");
 
-  const handleChanges = e => {
-    setFirstName(e.target.value);
-  };
+  const callback = () => {
+    alert(`${value.username}, ${value.email}`)
+  }
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    alert(firstName);
-  };
-
-  const clearForm = e => {
-    e.preventDefault();
-    setFirstName("");
-  };
+  const [value, clearForm, handleChanges, handleSubmit] = useForm('sign-in', initialValue, callback);
 
   return (
     <div p={2} className="form">
@@ -46,10 +40,20 @@ export default function SignupForm() {
           <legend>Add New Client</legend>
           <TextField
             id="outlined-name"
-            label="First Name"
+            label="User Name"
             className={classes.textField}
-            name="firstName"
-            value={firstName}
+            name="username"
+            value={value.username}
+            onChange={handleChanges}
+            margin="normal"
+            variant="outlined"
+          />
+          <TextField
+            id="outlined-name"
+            label="E-Mail"
+            className={classes.textField}
+            name="email"
+            value={value.email}
             onChange={handleChanges}
             margin="normal"
             variant="outlined"
